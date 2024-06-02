@@ -1,0 +1,39 @@
+
+.column__title {
+  font-family: 'Montserrat Alternates', serif;
+  font-size: 24px;
+  color: #3C3C3C;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.wallets {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px;
+  gap: 16px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+
+  &__title {
+    font-family: "Montserrat Alternates", serif;
+    font-size: 18px;
+    color: #3C3C3C;
+
+    display: flex;
+    padding: 0 8px;
+    background-color: rgba(0, 187, 130, 0.2);
+    border: 1px solid rgba(60, 60, 60, 0.15);
+    border-radius: 5px;
+  }
+
+  &__cards {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    gap: 24px;
+  }
+}

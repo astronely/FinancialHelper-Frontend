@@ -1,0 +1,37 @@
+
+.wallet {
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__text {
+    font-family: 'Montserrat Alternates', 'serif';
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #3c3c3c;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    &:hover {
+      background-color: rgba(0, 187, 130, 0.5);
+      transition: 0.3s;
+    }
+  }
+
+  &__pen {
+    width: 25px;
+    height: 25px;
+  }
+}
+
