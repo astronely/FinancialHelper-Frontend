@@ -8,18 +8,14 @@ import {useEffect, useState} from "react";
 import {AddWalletModal, ChangeWalletModal} from "./WalletModal.jsx";
 import {useApp} from "../../../hooks/useApp.js";
 import {toast} from "react-toastify";
-import {ConfirmWalletDeleteModal} from "../../confirmation/Confirm.jsx";
+import {ConfirmItemDeleteModal} from "../../confirmation/Confirm.jsx";
+import {openConfirm, openModal} from "../../../utils/modalUtils.js";
 
 export function Wallets() {
     const {wallets, setWallets, updateWallets} = useApp();
     const  {setIsActive, setModal, modal} = useModal();
     const [walletToUpdate, setWalletToUpdate] = useState(Object());
-
-    function openModal(modalName) {
-        // console.log("OPEN ADD/CHANGE WALLET")
-        setIsActive(true)
-        setModal(modalName)
-    }
+    const [walletToDelete, setWalletToDelete] = useState('');
 
     async function deleteWallet(name){
         setWallets(w => w.filter(item => item.name !== name))
@@ -41,7 +37,7 @@ export function Wallets() {
     const changeWallet = wallet => {
         setWalletToUpdate(wallet)
         // console.log("wallet to update: ", walletToUpdate)
-        openModal("changeWallet")
+        openModal(setIsActive, setModal, "changeWallet")
     }
 
     useEffect(() => {
@@ -60,14 +56,14 @@ export function Wallets() {
                 <div className={'wallets__title'}>Кошельки</div>
                 <div className={'wallets__cards'}>
                     {wallets.map((wallet, index) => (
-                        <WalletCard wallet={wallet} closeAction={openModal} changeAction={changeWallet} key={index} />
+                        <WalletCard wallet={wallet} confirmDelete={openConfirm} setWalletToDelete={setWalletToDelete} changeAction={changeWallet} key={index} />
                     ))}
                 </div>
             </div>
-            <button className={'primary-button'} onClick={() => openModal('addWallet')}>Add</button>
+            <button className={'primary-button'} onClick={() => openModal(setIsActive, setModal, 'addWallet')}>Добавить</button>
             <AddWalletModal open={modal === 'addWallet'} wallets={wallets} setWallets={setWallets}/>
             <ChangeWalletModal open={modal === 'changeWallet'} current={walletToUpdate}/>
-            <ConfirmWalletDeleteModal open={modal === 'confirmDeleteWallet'} deleteAction={deleteWallet}/>
+            <ConfirmItemDeleteModal open={modal === 'confirmDeleteWallet'} item={walletToDelete} deleteAction={deleteWallet}/>
         </InfoColumn>
     )
 }

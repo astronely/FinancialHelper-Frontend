@@ -5,8 +5,10 @@
 }
 
 .navbar-menu-icon {
-  width: 36px;
-  height: 36px ;
+  //width: 36px;
+  //height: 36px;
+  width: 50%;
+  height: 50%;
   background-repeat: no-repeat;
   background-image: url("icons/menu.svg");
   background-size: 100%;
@@ -57,6 +59,19 @@
     font-weight: 800;
     color: #3C3C3C;
   }
+
+  .main-logo {
+    width: 45%;
+    height: 45%;
+  }
+
+  .navbar-toggler {
+    padding: 0.15rem 0.55rem;
+    &-icon {
+      width: 1.2em;
+      height: 1.2em;
+    }
+  }
 }
 
 /* sm */
@@ -66,6 +81,18 @@
     font-size: 32px;
     font-weight: 800;
     color: #3C3C3C;
+  }
+  .main-logo {
+    width: auto;
+    height: auto;
+  }
+
+  .navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    &-icon {
+      width: 1.5em;
+      height: 1.5em;
+    }
   }
 }
 
@@ -108,6 +135,5 @@
     font-family: "Cruinn", serif;
     font-size: 18px;
     color: #1D1D1D;
-
   }
 }

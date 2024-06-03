@@ -27,17 +27,18 @@ export const AppProvider = ({ children }) => {
         await axios.get("http://localhost:8080/api/wallets/get_wallets", {withCredentials: true})
             .then(response => {
                 setWallets([])
-                console.log("UPDATE WALLETS")
+                // console.log("UPDATE WALLETS")
+                if (response.data === null) return
                 if (response.data.sort((a, b) => a.ID - b.ID)) {
                     for (let wallet of response.data) {
                         getWallet(wallet)
-                        console.log(wallet)
+                        // console.log(wallet)
                     }
                 }
             })
             .catch(error => {
+                console.log(error)
                 toast.error("Не получилось загрузить кошельки")
-                console.log(error.response)
             })
         // }
     }

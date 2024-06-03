@@ -24,18 +24,18 @@ export function AppHeader() {
                 }
             })
             .catch(error => console.log(error))
-        toast.success("You have successfully logged out")
+        toast.success("Вы успешно вышли из своей учетной записи")
     }
     return (
         <Navbar expand="lg" className="navbar">
             <Container>
-                <Navbar.Brand><img src="/icons/logo.svg" alt='MainLogo'/></Navbar.Brand>
+                <img src="/icons/logo.svg" className='main-logo' alt='MainLogo' />
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link className='nav-link nav-text active' href="#">Главная</Nav.Link>
                         {/*<Nav.Link className='nav-link nav-text' href="#">Добавить</Nav.Link>*/}
-                        <Nav.Link className='nav-link nav-text' href="#">Просмотреть расходы</Nav.Link>
+                        {/*<Nav.Link className='nav-link nav-text' href="#">Просмотреть расходы</Nav.Link>*/}
                     </Nav>
                     <div className="header-right">
                         <div className="nav-text">{usernameFromLoader}!</div>

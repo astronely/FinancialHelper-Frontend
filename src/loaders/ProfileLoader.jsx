@@ -1,6 +1,5 @@
 import axios from "axios";
-import {json, redirect} from "react-router-dom";
-import {useState} from "react";
+import {redirect} from "react-router-dom";
 
 export const ProfileLoader = async () => {
     let username
@@ -16,7 +15,7 @@ export const ProfileLoader = async () => {
             }
         });
     if (username === undefined) {
-        console.log("redirect test")
+        // console.log("redirect test")
         return redirect("/")
     }
 

@@ -43,7 +43,10 @@ export function SignUp({open = false}) {
             })
             .catch(error => {
                 console.log(error)
-                toast.error("Непраивльно заполнены поля")
+                if (error.response.status === 403) {
+                    toast.error("Пользователь с такой почтой уже зарегистрирован")
+                }
+                else toast.error("Неправильно заполнены поля")
             })
         reset()
     }

@@ -7,17 +7,15 @@ import axios from "axios";
 import {AddExpenseModal} from "./ExpenseModal.jsx";
 import {useApp} from "../../../hooks/useApp.js";
 import {toast} from "react-toastify";
+import "../../../utils/modalUtils.js"
+import {openConfirm, openModal} from "../../../utils/modalUtils.js";
+import {ConfirmItemDeleteModal} from "../../confirmation/Confirm.jsx";
 
 export function History() {
     const {wallets, updateWallets} = useApp()
     const [expenses, setExpenses] = useState([]);
     const {setIsActive, setModal, modal} = useModal();
-
-    async function openModal(modalName) {
-        // console.log("OPEN ADD EXPENSE")
-        setIsActive(true)
-        setModal(modalName)
-    }
+    const [expenseToDelete, setExpenseToDelete] = useState('');
 
     const getExpense = expense => {
         // console.log("getExpense: ", expense)
@@ -59,6 +57,7 @@ export function History() {
     }
 
     async function deleteExpense(expense){
+        console.log(expense)
         setExpenses(w => w.filter(item => item.id !== expense.id))
         await axios.delete("http://localhost:8080/api/expenses/delete",{
             data: {
@@ -90,20 +89,21 @@ export function History() {
 
     return (
         <InfoColumn>
-            <div className={'column__title'}>Последние операции</div>
+            <div className={'column__title'}>Совершенные операции</div>
             <div className={'history'}>
                 <div className={'history__header'}>
-                    <div>Все</div>
-                    <img src="icons/list.svg"/>
+                    <div>Все операции</div>
+                    {/*<img src="icons/list.svg"/>*/}
                 </div>
                 <div className={'history__cards'}>
                     {expenses.map((item, index) => (
-                        <HistoryCard item={item} closeAction={deleteExpense} key={index}/>
+                        <HistoryCard expense={item} confirmDelete={openConfirm} setExpenseToDelete={setExpenseToDelete} key={index}/>
                     ))}
                 </div>
             </div>
-            <button onClick={() => openModal('addExpense')} className={"primary-button"}>Add</button>
+            <button onClick={() => openModal(setIsActive, setModal, 'addExpense')} className={"primary-button"}>Добавить</button>
             <AddExpenseModal open={modal === 'addExpense'} addExpense={getExpense}/>
+            <ConfirmItemDeleteModal open={modal === 'confirmDeleteExpense'} item={expenseToDelete} deleteAction={deleteExpense}/>
         </InfoColumn>
     )
 }

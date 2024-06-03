@@ -38,7 +38,7 @@ export function LandingHeader() {
     return (
         <Navbar expand="lg" className="navbar">
             <Container>
-                <Navbar.Brand><img src="/icons/logo.svg" alt='MainLogo'/></Navbar.Brand>
+                <img src="/icons/logo.svg" className='main-logo' alt='MainLogo'/>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
