@@ -41,8 +41,8 @@ export function SignIn({open = false}) {
     return (
         <Modal open={open}>
             <form className='modal__form' onSubmit={handleSubmit(submitHandler)}>
-                <input  {...register('email')} className='modal__input' placeholder='email' type='text'/>
-                <input {...register('password')} className='modal__input' placeholder='password' type='password'/>
+                <input  {...register('email')} className='modal__input' placeholder='Email' type='text'/>
+                <input {...register('password')} className='modal__input' placeholder='пароль' type='password'/>
                 <button className='modal-button' type='submit'>Авторизоваться</button>
             </form>
         </Modal>

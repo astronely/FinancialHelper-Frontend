@@ -8,3 +8,7 @@ export function openConfirm(setIsActive, setModal, modalName, item, setItemToDel
     openModal(setIsActive, setModal, modalName)
     setItemToDelete(item)
 }
+
+export function isPriceCorrect(price) {
+    return /^\d+(\.\d{1,2})?$/.test(price)
+}

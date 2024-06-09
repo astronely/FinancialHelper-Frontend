@@ -8,10 +8,7 @@ import {useEffect, useState} from "react";
 import Select from "react-select";
 import {useApp} from "../../../hooks/useApp.js";
 import {ErrorMessage} from "@hookform/error-message";
-
-function isBalanceCorrect(price) {
-    return /^\d+(\.\d{1,2})?$/.test(price)
-}
+import {isPriceCorrect} from "../../../utils/modalUtils.js";
 
 export function AddWalletModal({open = false, wallets, setWallets}) {
 
@@ -26,13 +23,22 @@ export function AddWalletModal({open = false, wallets, setWallets}) {
         }
     })
 
+    function isWalletDataCorrect(data) {
+        return !(data.wallet_name === '' || data.balance === '' || data.currency === '');
+    }
+
     const submitHandler = async data => {
-        if (!isBalanceCorrect(data.balance)) {
+        if (!isWalletDataCorrect(data)) {
+            toast.error("Заполните все поля")
+            return
+        }
+
+        if (!isPriceCorrect(data.balance)) {
             toast.error("Введите баланс, содержащую 0,1 или 2 знака после запятой")
             return
         }
 
-        data['currency'] = selectedCurrency;
+        data['currency'] = selectedCurrency.value;
         await axios.post('http://localhost:8080/api/wallets/add', data, {withCredentials: true})
             .then(response => {
                 setWallets([...wallets, {
@@ -83,7 +89,7 @@ export function ChangeWalletModal({open = false, current}) {
     })
 
     const submitHandler = async data => {
-        if (!isBalanceCorrect(data.value)) {
+        if (!isPriceCorrect(data.value)) {
             toast.error("Введите баланс, содержащую 0,1 или 2 знака после запятой")
             return
         }

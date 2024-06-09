@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.min.css'
 import {useState} from "react";
 import {useApp} from "../../../hooks/useApp.js";
+import {isPriceCorrect} from "../../../utils/modalUtils.js";
 
 export function AddExpenseModal({open = false, addExpense}) {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -88,10 +89,6 @@ export function AddExpenseModal({open = false, addExpense}) {
         data['category'] = selectedCategory;
         data['wallet_currency'] = currentWallet.currency
         data['date'] = selectedDate.toISOString().split('T')[0];
-    }
-
-    function isPriceCorrect(price) {
-        return /^\d+(\.\d{1,2})?$/.test(price)
     }
 
     const submitHandler = async data => {

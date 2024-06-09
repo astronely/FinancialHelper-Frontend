@@ -54,10 +54,10 @@ export function SignUp({open = false}) {
     return (
         <Modal open={open}>
             <form className='modal__form' onSubmit={handleSubmit(submitHandler)}>
-                <input  {...register('email')} className='modal__input' placeholder='email' type='text'/>
-                <input {...register('username')} className='modal__input' placeholder='username' type='text'/>
-                <input {...register('full_name')} className='modal__input' placeholder='full name' type='text'/>
-                <input {...register('password')} className='modal__input' placeholder='password' type='text'/>
+                <input  {...register('email')} className='modal__input' placeholder='Email' type='text'/>
+                <input {...register('username')} className='modal__input' placeholder='Имя пользователя' type='text'/>
+                <input {...register('full_name')} className='modal__input' placeholder='ФИО' type='text'/>
+                <input {...register('password')} className='modal__input' placeholder='Пароль' type='password'/>
                 <button className='modal-button' type='submit'>Зарегистрироваться</button>
             </form>
         </Modal>
