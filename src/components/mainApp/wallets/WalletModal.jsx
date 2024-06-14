@@ -34,11 +34,11 @@ export function AddWalletModal({open = false, wallets, setWallets}) {
         }
 
         if (!isPriceCorrect(data.balance)) {
-            toast.error("Введите баланс, содержащую 0,1 или 2 знака после запятой")
+            toast.error("Введите баланс, содержащую 0,1 или 2 знака после точки")
             return
         }
 
-        data['currency'] = selectedCurrency.value;
+        data['currency'] = selectedCurrency;
         await axios.post('http://localhost:8080/api/wallets/add', data, {withCredentials: true})
             .then(response => {
                 setWallets([...wallets, {
@@ -51,8 +51,16 @@ export function AddWalletModal({open = false, wallets, setWallets}) {
                 reset()
             })
             .catch(error => {
-                console.log(error.response)
-                toast.error("Кошелек не добавлен")
+                // console.log(error.response)
+                if (error.response.status === 403) {
+                    toast.error("Кошелек с таким названием уже существует")
+                }
+                else if (error.response.status === 500) {
+                    toast.error("Сеанс закончился")
+                }
+                else {
+                    toast.error("Кошелек не добавлен")
+                }
             })
     }
 
@@ -61,14 +69,14 @@ export function AddWalletModal({open = false, wallets, setWallets}) {
     }
 
     const onCurrencyChange = (newValue) => {
-        setSelectedCurrency(newValue)
+        setSelectedCurrency(newValue.value)
     }
 
     return (
         <Modal open={open}>
             <form className='modal__form' onSubmit={handleSubmit(submitHandler)}>
                 <input  {...register('wallet_name')} className='modal__input' placeholder='Название' type='text' maxLength={12}/>
-                <input {...register('balance')} className='modal__input' placeholder='Баланс' type='text'/>
+                <input {...register('balance')} className='modal__input' placeholder='Баланс' type='text' maxLength={10}/>
                 <Select onChange={onCurrencyChange} value={getCurrency()} options={currency}/>
                 <button className='modal-button' type='submit'>Добавить</button>
             </form>
@@ -90,7 +98,7 @@ export function ChangeWalletModal({open = false, current}) {
 
     const submitHandler = async data => {
         if (!isPriceCorrect(data.value)) {
-            toast.error("Введите баланс, содержащую 0,1 или 2 знака после запятой")
+            toast.error("Введите баланс, содержащую 0,1 или 2 знака после точки")
             return
         }
         await axios.put('http://localhost:8080/api/wallets/update_wallet', data, {withCredentials: true})
@@ -102,7 +110,12 @@ export function ChangeWalletModal({open = false, current}) {
             })
             .catch(error => {
                 console.log(error.response)
-                toast.error("Баланс не был изменен")
+                if (error.response.status === 500) {
+                    toast.error("Сеанс закончился")
+                }
+                else {
+                    toast.error("Баланс не был изменен")
+                }
             })
     }
 
@@ -116,7 +129,7 @@ export function ChangeWalletModal({open = false, current}) {
                 <input  {...register('name')} className='modal__input'
                         placeholder='Название' type='text' readOnly/>
                 <input {...register('value')} className='modal__input' placeholder='Баланс'
-                       type='text'/>
+                       type='text' maxLength={10}/>
                 <input {...register('currency')} type='text' className='modal__input' readOnly/>
                 <button className='modal-button' type='submit'>Изменить</button>
                 <ErrorMessage errors={errors} name="balance" render={({message}) => <p className='modal__error'>{message}</p>} />

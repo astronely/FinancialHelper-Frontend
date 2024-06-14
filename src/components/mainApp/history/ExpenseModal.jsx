@@ -105,7 +105,7 @@ export function AddExpenseModal({open = false, addExpense}) {
         }
 
         if (!isPriceCorrect(data.price)) {
-            toast.error("Введите сумму, содержащую 0,1 или 2 знака после запятой")
+            toast.error("Введите сумму, содержащую 0,1 или 2 знака после точки")
             return
         }
 
@@ -128,7 +128,12 @@ export function AddExpenseModal({open = false, addExpense}) {
             })
             .catch(error => {
                 console.log(error.response)
-                toast.error("Операция не добавлена")
+                if (error.response.status === 500) {
+                    toast.error("Сеанс закончился")
+                }
+                else {
+                    toast.error("Операция не добавлена")
+                }
             })
     }
 
@@ -156,7 +161,7 @@ export function AddExpenseModal({open = false, addExpense}) {
                 <Select onChange={onWalletChange} value={getWallet()} options={walletsMenu}/>
                 <input {...register('shop_name')} className='modal__input' placeholder='Магазин' type='text' maxLength={12}/>
                 <Select onChange={onCategoryChange} value={getCategory()} options={categories}/>
-                <input {...register('price')} className='modal__input' placeholder='Сумма' type='text'/>
+                <input {...register('price')} className='modal__input' placeholder='Сумма' type='text' maxLength={10}/>
                 <DatePicker showIcon selected={selectedDate} onChange={date => setSelectedDate(date)}/>
                 <button className='modal-button' type='submit'>Добавить</button>
             </form>
