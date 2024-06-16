@@ -79,6 +79,10 @@ export function AddExpenseModal({open = false, addExpense}) {
         return !(data.wallet === '' || data.shop_name === '' || data.category === '' || data.price === '' || data.date === '');
     }
 
+    function isDateCorrect() {
+        return !!selectedDate
+    }
+
     function isWalletSelected(selectedWallet) {
         return selectedWallet.value !== undefined
     }
@@ -96,6 +100,11 @@ export function AddExpenseModal({open = false, addExpense}) {
             toast.error("Выберите кошелек")
             return
         }
+
+        if (!isDateCorrect()) {
+            toast.error("Выберите дату")
+            return
+        }
         const currentWallet = wallets.find(w => w.id === selectedWallet.value)
         completeData(data, currentWallet, selectedWallet, selectedCategory, selectedDate)
 
@@ -110,7 +119,7 @@ export function AddExpenseModal({open = false, addExpense}) {
         }
 
         console.log(currentWallet.value, data.price)
-        if (parseInt(currentWallet.value) - parseInt(data.price) < 0) {
+        if (parseFloat(currentWallet.value) - parseFloat(data.price) < 0) {
             toast.error("Недостаточно средств")
             return
         }

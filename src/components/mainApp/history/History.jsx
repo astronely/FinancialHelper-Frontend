@@ -36,7 +36,13 @@ export function History() {
             .then(response => {
                 setExpenses([])
                 // console.log("getExpenses: ", expenses)
-                if (response.data) {
+                if (response.data.sort(function(a,b) {
+                    if (a.Date < b.Date) return 1;
+                    if (a.Date > b.Date) return -1;
+                    if (a.CreatedAt < b.CreatedAt) return 1;
+                    if (a.CreatedAt >= b.CreatedAt) return -1;
+                    }))
+                {
                     for (let expense of response.data) {
                         getExpense(expense)
                     }

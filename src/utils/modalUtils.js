@@ -1,5 +1,5 @@
 export function openModal(setIsActive, setModal, modalName) {
-    console.log("OPEN ADD EXPENSE")
+    // console.log("OPEN ADD EXPENSE")
     setIsActive(true)
     setModal(modalName)
 }

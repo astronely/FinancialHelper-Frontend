@@ -17,9 +17,9 @@ export function Information() {
             <div id="Possibilities" className="bg-odd">
                 <Possibilities />
             </div>
-            <div id="Statistics" className="bg-even">
-                <Statistics />
-            </div>
+            {/*<div id="Statistics" className="bg-even">*/}
+            {/*    <Statistics />*/}
+            {/*</div>*/}
         </div>
     )
 }
